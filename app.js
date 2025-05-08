@@ -1,28 +1,33 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+//1.必要なライブラリーをロード
+var createError = require('http-errors');//HTTPエラー対処を行うもの
+var express = require('express');//express本体
+var path = require('path');//ファイルパスを扱う
+var cookieParser = require('cookie-parser');//クッキーのパース(値の変換)
+var logger = require('morgan');//HTTPリクエストのログ出力に関するもの
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+//2.ルート用モジュールのロード
+var indexRouter = require('./routes/index');//このpathにアクセスがあったときにindex.jsをロードする
+var usersRouter = require('./routes/users');//このpathにアクセスがあったときにusers.jsをロードする
 
+//3.Express オブジェクトの作成と基本設定
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'jade');//テンプレートエンジンの設定も行っている
 
+//4.関数の読み込み（1.でロードしたモジュールの機能を呼び出せるようにしたものapp.useで関数を設定）
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));//4
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+//5.ルート用、エラー用のapp.use
+app.use('/', indexRouter);//(ルート)
+app.use('/users', usersRouter);//users用
 
-// catch 404 and forward to error handler
+// catch 404 and forward to error handler(ページが無かったときの処理)
 app.use(function(req, res, next) {
   next(createError(404));
 });
@@ -38,4 +43,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+//6.module.exportsの設定
+module.exports = app;//-最後にexpressにappオブジェクトを設定
