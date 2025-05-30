@@ -10,6 +10,8 @@ var indexRouter = require('./routes/index');//このpathにアクセスがあっ
 var usersRouter = require('./routes/users');//このpathにアクセスがあったときにusers.jsをロードする
 var helloRouter = require('./routes/hello');//このpathにアクセスがあったときにhello.jsをロードする
 var notesRouter = require('./routes/notes');//このpathにアクセスがあったときにnotes.jsをロードする
+var catRouter =require('./routes/cat');
+var dogRouter =require('./routes/dog');
 
 //3.Express オブジェクトの作成と基本設定
 var app = express();
@@ -30,6 +32,9 @@ app.use('/', indexRouter);//(ルート)
 app.use('/users', usersRouter);//users用
 app.use('/hello', helloRouter);//hello用
 app.use('/notes', notesRouter);//notes用
+app.use('/cat',catRouter);
+app.use('/dog',dogRouter);
+
 
 // catch 404 and forward to error handler(ページが無かったときの処理)
 app.use(function(req, res, next) {
